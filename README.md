@@ -1,5 +1,4 @@
-#Expert Finder
-
+# Expert Finder
 ### Installation and usage:
 https://colab.research.google.com/drive/1TLCr46f-Mn2oOpegoMT6lTim2d4uBVLO
 ## ExpertRecommendationTool Class (API):
