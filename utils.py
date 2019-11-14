@@ -19,6 +19,7 @@ import subprocess
 from sentence_transformers import SentenceTransformer
 import torch
 from scipy import sparse
+import torch.nn.functional as F
 
 def download_file_from_google_drive(id, destination):
     URL = "https://docs.google.com/uc?export=download"
@@ -107,6 +108,7 @@ class MultiVAE(nn.Module):
 
     def encode(self, input):
         h = F.normalize(input)
+
         h = self.drop(h)
 
         for i, layer in enumerate(self.q_layers):
