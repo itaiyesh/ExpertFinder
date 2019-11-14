@@ -133,7 +133,7 @@ class MultiVAE(nn.Module):
         for i, layer in enumerate(self.p_layers):
             h = layer(h)
             if i != len(self.p_layers) - 1:
-                h = F.tanh(h)
+                h = torch.tanh(h)
         return h
 
     def init_weights(self):
