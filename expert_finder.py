@@ -67,8 +67,9 @@ class TitleSearchFaissHandler:
             self.paper_vectors = keyedvectors.WordEmbeddingsKeyedVectors(len(paper_embs[0]))
             self.paper_vectors.add(paper_ids, paper_embs)
         else:
-            self.index = faiss.read_index(index_file)
-            self.index.nprobe = 20
+            self.index = faiss.read_index(self.index_file)
+            # That should be enough
+            self.index.nprobe = 100
             remove_papers = [paper for paper in self.idx2paper if paper not in relevant_papers]
             if len(remove_papers) > 0: self.index.remove_ids(np.array(remove_papers))
             print(self.index.ntotal, " papers are in index.")
