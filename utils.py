@@ -2,6 +2,23 @@ import requests
 import torch.nn as nn
 import pickle
 import os
+import difflib
+from tqdm import tqdm_notebook as tqdm
+from gensim.models import word2vec, keyedvectors
+import numpy as np
+import h5py
+import faiss
+from collections import Counter
+from sklearn.preprocessing import normalize as norm
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+sns.set(style="whitegrid")
+from matplotlib.backends.backend_pdf import PdfPages
+import subprocess
+from sentence_transformers import SentenceTransformer
+import torch
+from scipy import sparse
 
 def download_file_from_google_drive(id, destination):
     URL = "https://docs.google.com/uc?export=download"
