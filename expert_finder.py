@@ -209,7 +209,7 @@ class CollaborativeFilteringHandler:
 
 
 class ExpertRecommendationTool:
-    def __init__(self, data_file_id, author_names):
+    def __init__(self, data_file_id, author_names, flat_index_threshold = 100000):
         if not os.path.exists('data.tar'):
             download_file_from_google_drive(data_file_id, 'data.tar')
 
@@ -235,7 +235,8 @@ class ExpertRecommendationTool:
                                author_idx2paper_idxs_file,
                                index_file,
                                paper_embs_file,
-                               authors_names=author_names)
+                               authors_names=author_names,
+                               flat_index_threshold=flat_index_threshold)
 
     def recommend_topn(self, title, author_names, topn=10, k=100, recency_decay=0.25, author_weight=0.7, cf_weight=0.5,
                        clip_n=4,
@@ -353,10 +354,9 @@ class ExpertFinder:
         authors = self.get_authors_from_names(author_names)
 
         recommended_by_title = []
-        recommended_by_title_probs = []
         author2best_papers = {}
         if (title is not None) and title != '':
-            recommended_by_title, recommended_by_title_probs, author2best_papers = self.title_search_handler.recommend_topn(
+            recommended_by_title, _ , author2best_papers = self.title_search_handler.recommend_topn(
                 title, radius, k, recency_decay, author_weight)
         recommended_by_authors = []
         recommended_by_authors_probs = []
@@ -367,8 +367,6 @@ class ExpertFinder:
         predicted_author2idx = {author: idx for idx, author in
                                 enumerate(set(recommended_by_title).union(set(recommended_by_authors)))}
         predicted_idx2author = {idx: author for author, idx in predicted_author2idx.items()}
-        # print(recommended_by_title_probs, recommended_by_authors_probs)
-
         author2info = {}
         for author, best_papers in author2best_papers.items():
             best_papers = sorted(best_papers, key=lambda x: x[0], reverse=True)
@@ -440,7 +438,6 @@ class ExpertFinder:
                                     new_title += paper_title[max_text_len * 2:]
                                 else:
                                     new_title += paper_title[max_text_len:]
-                                #                 paper_title = paper_title[:(max_text_len//2)]+'...'+paper_title[-(max_text_len//2):]
                                 paper_title = new_title
                         paper_year = paper_data['year']
                         is_paper_author = int(author) in paper_data['authors']
