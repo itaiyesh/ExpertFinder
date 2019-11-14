@@ -239,7 +239,7 @@ class ExpertRecommendationTool:
 
     def recommend_topn(self, title, author_names, topn=10, k=100, recency_decay=0.25, author_weight=0.7, cf_weight=0.5,
                        clip_n=4,
-                       max_text_len=None, font_size=14, fig_height=None, fig_width=9):
+                       max_text_len=None, font_size=14, fig_height=None, fig_width=4):
         return self.ef.recommend_topn(title, author_names, topn, k, recency_decay, author_weight, cf_weight, clip_n,
                                       max_text_len, font_size, fig_height, fig_width)
 
@@ -324,7 +324,7 @@ class ExpertFinder:
                     auto = True
                     selected_match = close_matches[0]
                     names.append(selected_match)
-                    print("{}->{}".format(name, selected_match))
+                    print("{} (original) -> {} (matched)".format(name, selected_match))
                     continue
                 if selection.isdigit() and int(selection) < len(close_matches):
                     selected_match = close_matches[int(selection)]
@@ -333,11 +333,11 @@ class ExpertFinder:
             else:
                 names.append(name)
 
-        print("Selected authors:")
+        print("Matched authors ({}):".format(len(names)))
         for name in names:
             print(name)
         if len(missing_names) > 0:
-            print("Missing:")
+            print("Missing ({}):".format(len(missing_names)))
             for name in missing_names:
                 print(name)
 
