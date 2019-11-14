@@ -20,6 +20,8 @@ from sentence_transformers import SentenceTransformer
 import torch
 from scipy import sparse
 import torch.nn.functional as F
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 
 def download_file_from_google_drive(id, destination):
     URL = "https://docs.google.com/uc?export=download"
