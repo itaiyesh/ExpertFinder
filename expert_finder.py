@@ -242,6 +242,7 @@ class ExpertRecommendationTool:
     def recommend_topn(self, title, author_names, topn=10, k=100, recency_decay=0.25, author_weight=0.7, cf_weight=0.5,
                        clip_n=4,
                        max_text_len=None, font_size=14, fig_height=None, fig_width=4):
+        print("Title: {} Authors: {}".format(title, author_names))
         return self.ef.recommend_topn(title, author_names, topn, k, recency_decay, author_weight, cf_weight, clip_n,
                                       max_text_len, font_size, fig_height, fig_width)
 
